@@ -1,5 +1,6 @@
 package com.fareye.training.model;
 
+import com.fareye.training.annotations.DuplicateTitle;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,8 +11,11 @@ import java.util.Date;
 enum Status{
     pending, done
 }
-@Getter @Setter @NoArgsConstructor
+
+@Getter @Setter @NoArgsConstructor @DuplicateTitle
 public class Todo {
+    @NotNull
+    int id;
     Date modifiedDate=new Date(), dueDate, createdDate;
     private String body;
     @NotNull

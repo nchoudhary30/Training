@@ -21,7 +21,7 @@ public class PropertyController {
     @GetMapping("/property")
     public List<String> print(){
         if(keys.size()==0)
-        readfile();
+        readFile();
         List<String> prop= new ArrayList<>();
         for(String k:keys){
             prop.add(k + " : " + env.getProperty(k));
@@ -31,7 +31,7 @@ public class PropertyController {
     }
 
 //    @GetMapping("/property")
-    public void readfile(){
+    public void readFile(){
         File file = new File("src/main/resources/application.properties");
         Scanner sc= null;
         try {
