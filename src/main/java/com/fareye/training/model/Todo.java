@@ -5,8 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.time.LocalDate;
 
 enum Status{
     pending, done
@@ -14,11 +15,13 @@ enum Status{
 
 @Getter @Setter @NoArgsConstructor @DuplicateTitle
 public class Todo {
-    @NotNull
+    @NotNull @Min(value = 2880, message = "ID must be greater than 2880")
     int id;
-    Date modifiedDate=new Date(), dueDate, createdDate;
+    LocalDate modifiedDate = LocalDate.now();
+    LocalDate dueDate = LocalDate.now();
+    LocalDate createdDate = LocalDate.now();
     private String body;
-    @NotNull
+    @NotNull(message = "Title must not be null")
     private String title;
     private Status status = Status.pending;
     User user;

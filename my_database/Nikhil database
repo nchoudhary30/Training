@@ -1,0 +1,355 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 14.5 (Ubuntu 14.5-1.pgdg20.04+1)
+-- Dumped by pg_dump version 15.0 (Ubuntu 15.0-1.pgdg20.04+1)
+
+-- Started on 2022-10-21 10:46:02 IST
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 4 (class 2615 OID 2200)
+-- Name: public; Type: SCHEMA; Schema: -; Owner: postgres
+--
+
+-- *not* creating schema, since initdb creates it
+
+
+ALTER SCHEMA public OWNER TO postgres;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 216 (class 1259 OID 16425)
+-- Name: coupons; Type: TABLE; Schema: public; Owner: nikhil
+--
+
+CREATE TABLE public.coupons (
+    coupon_id bigint NOT NULL,
+    expiry date NOT NULL,
+    "discount " money
+);
+
+
+ALTER TABLE public.coupons OWNER TO nikhil;
+
+--
+-- TOC entry 213 (class 1259 OID 16408)
+-- Name: items; Type: TABLE; Schema: public; Owner: nikhil
+--
+
+CREATE TABLE public.items (
+    items_id integer NOT NULL,
+    order_id bigint NOT NULL,
+    quantity integer NOT NULL,
+    product_id integer NOT NULL
+);
+
+
+ALTER TABLE public.items OWNER TO nikhil;
+
+--
+-- TOC entry 212 (class 1259 OID 16403)
+-- Name: orders; Type: TABLE; Schema: public; Owner: nikhil
+--
+
+CREATE TABLE public.orders (
+    order_id bigint NOT NULL,
+    order_date date NOT NULL,
+    order_summary money NOT NULL,
+    transcation_id bigint NOT NULL,
+    coupon_id bigint,
+    user_id integer
+);
+
+
+ALTER TABLE public.orders OWNER TO nikhil;
+
+--
+-- TOC entry 211 (class 1259 OID 16396)
+-- Name: product category; Type: TABLE; Schema: public; Owner: nikhil
+--
+
+CREATE TABLE public."product category" (
+    category_id integer NOT NULL,
+    category_name character varying NOT NULL,
+    category_desc character varying
+);
+
+
+ALTER TABLE public."product category" OWNER TO nikhil;
+
+--
+-- TOC entry 214 (class 1259 OID 16413)
+-- Name: product review; Type: TABLE; Schema: public; Owner: nikhil
+--
+
+CREATE TABLE public."product review" (
+    review_id integer NOT NULL,
+    rating smallint NOT NULL,
+    product_id integer NOT NULL
+);
+
+
+ALTER TABLE public."product review" OWNER TO nikhil;
+
+--
+-- TOC entry 210 (class 1259 OID 16391)
+-- Name: products; Type: TABLE; Schema: public; Owner: nikhil
+--
+
+CREATE TABLE public.products (
+    product_id integer NOT NULL,
+    product_name character varying(20) NOT NULL,
+    product_price money NOT NULL,
+    category_id integer
+);
+
+
+ALTER TABLE public.products OWNER TO nikhil;
+
+--
+-- TOC entry 215 (class 1259 OID 16418)
+-- Name: transactions; Type: TABLE; Schema: public; Owner: nikhil
+--
+
+CREATE TABLE public.transactions (
+    transaction_id bigint NOT NULL,
+    user_id integer NOT NULL,
+    order_id bigint NOT NULL,
+    amount money NOT NULL,
+    status character varying NOT NULL
+);
+
+
+ALTER TABLE public.transactions OWNER TO nikhil;
+
+--
+-- TOC entry 209 (class 1259 OID 16386)
+-- Name: users; Type: TABLE; Schema: public; Owner: nikhil
+--
+
+CREATE TABLE public.users (
+    user_id integer NOT NULL,
+    user_name character varying(20) NOT NULL,
+    user_phone bigint NOT NULL,
+    user_address character varying(40) NOT NULL,
+    user_dob date NOT NULL
+);
+
+
+ALTER TABLE public.users OWNER TO nikhil;
+
+--
+-- TOC entry 3359 (class 0 OID 16425)
+-- Dependencies: 216
+-- Data for Name: coupons; Type: TABLE DATA; Schema: public; Owner: nikhil
+--
+
+INSERT INTO public.coupons (coupon_id, expiry, "discount ") VALUES (3001, '2022-11-30', '₹100.00');
+INSERT INTO public.coupons (coupon_id, expiry, "discount ") VALUES (3002, '2022-10-30', '₹50.00');
+INSERT INTO public.coupons (coupon_id, expiry, "discount ") VALUES (3003, '2022-12-02', '₹150.00');
+INSERT INTO public.coupons (coupon_id, expiry, "discount ") VALUES (3004, '2022-11-12', '₹300.00');
+INSERT INTO public.coupons (coupon_id, expiry, "discount ") VALUES (3005, '2022-12-25', '₹500.00');
+INSERT INTO public.coupons (coupon_id, expiry, "discount ") VALUES (3008, '2022-11-30', '₹200.00');
+INSERT INTO public.coupons (coupon_id, expiry, "discount ") VALUES (3007, '2022-12-02', '₹400.00');
+INSERT INTO public.coupons (coupon_id, expiry, "discount ") VALUES (3006, '2022-12-15', '₹200.00');
+
+
+--
+-- TOC entry 3356 (class 0 OID 16408)
+-- Dependencies: 213
+-- Data for Name: items; Type: TABLE DATA; Schema: public; Owner: nikhil
+--
+
+INSERT INTO public.items (items_id, order_id, quantity, product_id) VALUES (10, 100001, 2, 1);
+INSERT INTO public.items (items_id, order_id, quantity, product_id) VALUES (20, 100002, 3, 2);
+INSERT INTO public.items (items_id, order_id, quantity, product_id) VALUES (30, 100003, 1, 1);
+INSERT INTO public.items (items_id, order_id, quantity, product_id) VALUES (40, 100002, 1, 3);
+INSERT INTO public.items (items_id, order_id, quantity, product_id) VALUES (50, 100004, 2, 5);
+INSERT INTO public.items (items_id, order_id, quantity, product_id) VALUES (60, 100001, 1, 6);
+
+
+--
+-- TOC entry 3355 (class 0 OID 16403)
+-- Dependencies: 212
+-- Data for Name: orders; Type: TABLE DATA; Schema: public; Owner: nikhil
+--
+
+INSERT INTO public.orders (order_id, order_date, order_summary, transcation_id, coupon_id, user_id) VALUES (100001, '2022-08-12', '₹435.00', 1000001, 3001, 2881);
+INSERT INTO public.orders (order_id, order_date, order_summary, transcation_id, coupon_id, user_id) VALUES (100002, '2022-07-04', '₹3,435.00', 1000002, 3002, 2883);
+INSERT INTO public.orders (order_id, order_date, order_summary, transcation_id, coupon_id, user_id) VALUES (100003, '2022-06-09', '₹876.00', 1000003, 3003, 2881);
+INSERT INTO public.orders (order_id, order_date, order_summary, transcation_id, coupon_id, user_id) VALUES (100004, '2022-09-25', '₹965.00', 1000004, 3004, 2884);
+
+
+--
+-- TOC entry 3354 (class 0 OID 16396)
+-- Dependencies: 211
+-- Data for Name: product category; Type: TABLE DATA; Schema: public; Owner: nikhil
+--
+
+INSERT INTO public."product category" (category_id, category_name, category_desc) VALUES (11, 'tshirts', NULL);
+INSERT INTO public."product category" (category_id, category_name, category_desc) VALUES (22, 'shoes', NULL);
+INSERT INTO public."product category" (category_id, category_name, category_desc) VALUES (33, 'furniture', NULL);
+
+
+--
+-- TOC entry 3357 (class 0 OID 16413)
+-- Dependencies: 214
+-- Data for Name: product review; Type: TABLE DATA; Schema: public; Owner: nikhil
+--
+
+INSERT INTO public."product review" (review_id, rating, product_id) VALUES (101, 7, 1);
+INSERT INTO public."product review" (review_id, rating, product_id) VALUES (108, 8, 5);
+INSERT INTO public."product review" (review_id, rating, product_id) VALUES (102, 6, 5);
+INSERT INTO public."product review" (review_id, rating, product_id) VALUES (103, 4, 3);
+INSERT INTO public."product review" (review_id, rating, product_id) VALUES (106, 5, 6);
+INSERT INTO public."product review" (review_id, rating, product_id) VALUES (104, 9, 2);
+INSERT INTO public."product review" (review_id, rating, product_id) VALUES (107, 7, 7);
+INSERT INTO public."product review" (review_id, rating, product_id) VALUES (105, 7, 4);
+
+
+--
+-- TOC entry 3353 (class 0 OID 16391)
+-- Dependencies: 210
+-- Data for Name: products; Type: TABLE DATA; Schema: public; Owner: nikhil
+--
+
+INSERT INTO public.products (product_id, product_name, product_price, category_id) VALUES (1, 'Puma Shoes', '₹4,000.00', 22);
+INSERT INTO public.products (product_id, product_name, product_price, category_id) VALUES (2, 'Red tape tshirt', '₹900.00', 11);
+INSERT INTO public.products (product_id, product_name, product_price, category_id) VALUES (3, 'adidas shoes', '₹5,000.00', 22);
+INSERT INTO public.products (product_id, product_name, product_price, category_id) VALUES (4, 'ucb tshirt', '₹800.00', 11);
+INSERT INTO public.products (product_id, product_name, product_price, category_id) VALUES (5, 'reebok shoes', '₹2,500.00', 22);
+INSERT INTO public.products (product_id, product_name, product_price, category_id) VALUES (6, 'chair', '₹500.00', 33);
+INSERT INTO public.products (product_id, product_name, product_price, category_id) VALUES (7, 'random chair', '₹1,000.00', 33);
+
+
+--
+-- TOC entry 3358 (class 0 OID 16418)
+-- Dependencies: 215
+-- Data for Name: transactions; Type: TABLE DATA; Schema: public; Owner: nikhil
+--
+
+INSERT INTO public.transactions (transaction_id, user_id, order_id, amount, status) VALUES (1000001, 2881, 100001, '₹435.00', 'success');
+INSERT INTO public.transactions (transaction_id, user_id, order_id, amount, status) VALUES (1000002, 2881, 100002, '₹876.00', 'failed');
+INSERT INTO public.transactions (transaction_id, user_id, order_id, amount, status) VALUES (1000003, 2882, 100003, '₹965.00', 'failed');
+INSERT INTO public.transactions (transaction_id, user_id, order_id, amount, status) VALUES (1000004, 2883, 100004, '₹3,435.00', 'success');
+INSERT INTO public.transactions (transaction_id, user_id, order_id, amount, status) VALUES (1000005, 2884, 100005, '₹4,500.00', 'success');
+INSERT INTO public.transactions (transaction_id, user_id, order_id, amount, status) VALUES (1000006, 2885, 100006, '₹300.00', 'success');
+
+
+--
+-- TOC entry 3352 (class 0 OID 16386)
+-- Dependencies: 209
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: nikhil
+--
+
+INSERT INTO public.users (user_id, user_name, user_phone, user_address, user_dob) VALUES (2881, 'Nikhil', 9109059955, 'Sector-137', '2000-01-30');
+INSERT INTO public.users (user_id, user_name, user_phone, user_address, user_dob) VALUES (2882, 'Abhshek', 9876543298, 'Sector-127,Noida', '1999-03-12');
+INSERT INTO public.users (user_id, user_name, user_phone, user_address, user_dob) VALUES (2883, 'Ganesh', 7654938723, 'Rohini east', '1999-04-24');
+INSERT INTO public.users (user_id, user_name, user_phone, user_address, user_dob) VALUES (2884, 'Gurpreet Singh', 4235645344, 'Moga, Punjab', '2000-06-16');
+INSERT INTO public.users (user_id, user_name, user_phone, user_address, user_dob) VALUES (2885, 'Random Singh', 3456787654, 'Dwarka, Delhi', '2001-05-08');
+INSERT INTO public.users (user_id, user_name, user_phone, user_address, user_dob) VALUES (2886, 'Tanmay Godse', 4564543243, 'Indore, MP', '2000-02-01');
+
+
+--
+-- TOC entry 3212 (class 2606 OID 16429)
+-- Name: coupons coupons_pkey; Type: CONSTRAINT; Schema: public; Owner: nikhil
+--
+
+ALTER TABLE ONLY public.coupons
+    ADD CONSTRAINT coupons_pkey PRIMARY KEY (coupon_id);
+
+
+--
+-- TOC entry 3206 (class 2606 OID 16412)
+-- Name: items items_pkey; Type: CONSTRAINT; Schema: public; Owner: nikhil
+--
+
+ALTER TABLE ONLY public.items
+    ADD CONSTRAINT items_pkey PRIMARY KEY (items_id);
+
+
+--
+-- TOC entry 3204 (class 2606 OID 16407)
+-- Name: orders orders_pkey; Type: CONSTRAINT; Schema: public; Owner: nikhil
+--
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT orders_pkey PRIMARY KEY (order_id);
+
+
+--
+-- TOC entry 3202 (class 2606 OID 16402)
+-- Name: product category product category_pkey; Type: CONSTRAINT; Schema: public; Owner: nikhil
+--
+
+ALTER TABLE ONLY public."product category"
+    ADD CONSTRAINT "product category_pkey" PRIMARY KEY (category_id);
+
+
+--
+-- TOC entry 3208 (class 2606 OID 16417)
+-- Name: product review product review_pkey; Type: CONSTRAINT; Schema: public; Owner: nikhil
+--
+
+ALTER TABLE ONLY public."product review"
+    ADD CONSTRAINT "product review_pkey" PRIMARY KEY (review_id);
+
+
+--
+-- TOC entry 3200 (class 2606 OID 16395)
+-- Name: products products_pkey; Type: CONSTRAINT; Schema: public; Owner: nikhil
+--
+
+ALTER TABLE ONLY public.products
+    ADD CONSTRAINT products_pkey PRIMARY KEY (product_id);
+
+
+--
+-- TOC entry 3210 (class 2606 OID 16424)
+-- Name: transactions transaction_pkey; Type: CONSTRAINT; Schema: public; Owner: nikhil
+--
+
+ALTER TABLE ONLY public.transactions
+    ADD CONSTRAINT transaction_pkey PRIMARY KEY (transaction_id);
+
+
+--
+-- TOC entry 3198 (class 2606 OID 16390)
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: nikhil
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (user_id);
+
+
+--
+-- TOC entry 3365 (class 0 OID 0)
+-- Dependencies: 4
+-- Name: SCHEMA public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE USAGE ON SCHEMA public FROM PUBLIC;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+-- Completed on 2022-10-21 10:46:02 IST
+
+--
+-- PostgreSQL database dump complete
+--
+
